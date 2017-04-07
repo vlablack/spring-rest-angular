@@ -1,0 +1,32 @@
+<div class="modal fade" id="createBookModal" tabindex="-1" role="dialog" aria-labelledby="createBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createBookModalLabel">Create new book</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label for="bookTitle" class="col-2 col-form-label">Title</label>
+            <div class="col-10">
+              <input type="text" class="form-control" id="bookTitle" name="bookTitle" placeholder="Enter book title">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="bookAuthor" class="col-2 col-form-label">Author</label>
+            <div class="col-10">
+              <input type="text" class="form-control" id="bookAuthor" name="bookAuthor" placeholder="Enter author">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
