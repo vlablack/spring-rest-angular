@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {AuthorModel} from "../model/author-model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PostService} from "../service/post.service";
 import {API} from "../global";
-import {Http} from "@angular/http";
 
 @Component({
   selector: 'app-create-authors-modal-form',
@@ -34,8 +33,15 @@ export class CreateAuthorsModalFormComponent implements OnInit {
     if (this.authorForm.valid) {
       console.log('Reactive Form Data: ');
       const author: AuthorModel = new AuthorModel(value['firstName'], value['lastName']);
-      this.postService.sendPostRequest(API.AUTHORS_INSERT, author).subscribe(data => {
+      this.postService.sendPostRequest(API.AUTHORS_INSERT, author).subscribe(
+        data => {
           console.log(data);
+        },
+        err => {
+          console.error(err);
+        },
+        () => {
+          console.error("OUps");
         }
       );
     }

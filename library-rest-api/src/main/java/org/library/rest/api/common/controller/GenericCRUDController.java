@@ -4,6 +4,7 @@ import org.library.rest.api.common.service.GenericCRUDService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,8 +20,8 @@ public abstract class GenericCRUDController<EntityType> {
 
     protected abstract String getBaseUrl();
 
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public ResponseModel insertEntity(@Valid EntityType entity, BindingResult errors) {
+    @RequestMapping(value = "/insert", method = RequestMethod.POST, consumes = {"application/json"})
+    public ResponseModel insertEntity(@Valid @RequestBody EntityType entity, BindingResult errors) {
         if (errors.hasErrors()) {
             return new ResponseModel(HttpStatus.BAD_REQUEST, getErrorsMap(errors));
         }
