@@ -17,4 +17,13 @@ public abstract class GenericCRUDServiceImpl<EntityType> implements GenericCRUDS
             throw new LibraryApiException(e);
         }
     }
+
+    @Override
+    public EntityType findById(Long id) {
+        try {
+            return getRepository().findOne(id);
+        } catch (Exception e) {
+            throw new LibraryApiException(e);
+        }
+    }
 }

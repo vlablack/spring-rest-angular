@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthorModel} from "../model/author-model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Observable} from "rxjs";
 import {PostService} from "../service/post.service";
 import {API} from "../global";
 
@@ -39,9 +40,6 @@ export class CreateAuthorsModalFormComponent implements OnInit {
         },
         err => {
           console.error(err);
-        },
-        () => {
-          console.error("OUps");
         }
       );
     }

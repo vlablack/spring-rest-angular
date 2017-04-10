@@ -5,10 +5,10 @@ import org.library.rest.api.common.service.GenericCRUDService;
 import org.library.rest.api.component.author.service.AuthorService;
 import org.library.rest.api.domain.Author;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping(AuthorController.BASE_URL)
 public class AuthorController extends GenericCRUDController<Author> {
 

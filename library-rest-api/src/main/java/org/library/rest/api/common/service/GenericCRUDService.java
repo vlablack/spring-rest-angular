@@ -4,4 +4,6 @@ public interface GenericCRUDService<EntityType> {
 
     void save(EntityType entity);
 
+    EntityType findById(Long id);
+
 }
