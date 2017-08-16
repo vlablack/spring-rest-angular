@@ -7,9 +7,7 @@ import org.library.rest.api.domain.HasId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class GenericCRUDServiceImpl<E extends HasId> implements GenericCRUDService<E> {
-
-    protected abstract JpaRepository<E, Long> getRepository();
+public abstract class GenericCRUDServiceImpl<E extends HasId> extends GenericReadServiceImpl<E> implements GenericCRUDService<E> {
 
     @Transactional(rollbackFor = LibraryApiException.class)
     @Override
@@ -53,12 +51,4 @@ public abstract class GenericCRUDServiceImpl<E extends HasId> implements Generic
         }
     }
 
-    @Override
-    public E findById(Long id) {
-        try {
-            return getRepository().findOne(id);
-        } catch (Exception e) {
-            throw new LibraryApiException(e);
-        }
-    }
 }

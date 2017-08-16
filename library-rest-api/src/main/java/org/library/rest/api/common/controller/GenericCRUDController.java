@@ -1,5 +1,6 @@
 package org.library.rest.api.common.controller;
 
+import javax.validation.Valid;
 import org.library.rest.api.common.exception.LibraryApiException;
 import org.library.rest.api.common.exception.UnsupportedServiceResultTypeException;
 import org.library.rest.api.common.model.BaseEntityDto;
@@ -8,25 +9,14 @@ import org.library.rest.api.common.model.ServiceResult;
 import org.library.rest.api.common.service.GenericCRUDService;
 import org.library.rest.api.domain.HasId;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @ResponseBody
-public abstract class GenericCRUDController<E extends HasId> {
-
-    protected abstract GenericCRUDService<E> getService();
-
-    protected abstract String getBaseUrl();
-
-    @RequestMapping(params = "/{id}", method = RequestMethod.GET)
-    public ResponseModel getEntityById(@PathVariable("id") Long id) {
-        try {
-            return ResponseModel.ok(getService().findById(id));
-        } catch (LibraryApiException e) {
-            return ResponseModel.internalError(e);
-        }
-    }
+public abstract class GenericCRUDController<E extends HasId> extends GenericReadController<E> {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel insertEntity(@Valid @RequestBody E entity, BindingResult errors) {
