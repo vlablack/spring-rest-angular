@@ -1,59 +1,82 @@
 package org.library.rest.api.common.controller;
 
+import org.library.rest.api.common.exception.LibraryApiException;
+import org.library.rest.api.common.exception.UnsupportedServiceResultTypeException;
+import org.library.rest.api.common.model.BaseEntityDto;
+import org.library.rest.api.common.model.ResponseModel;
+import org.library.rest.api.common.model.ServiceResult;
 import org.library.rest.api.common.service.GenericCRUDService;
+import org.library.rest.api.domain.HasId;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @ResponseBody
-public abstract class GenericCRUDController<EntityType> {
+public abstract class GenericCRUDController<E extends HasId> {
 
-    protected abstract GenericCRUDService<EntityType> getService();
+    protected abstract GenericCRUDService<E> getService();
 
     protected abstract String getBaseUrl();
 
-    @RequestMapping(value = "find", method = RequestMethod.GET)
-    public ResponseModel getEntityById(@RequestParam("id") Long id) {
+    @RequestMapping(params = "/{id}", method = RequestMethod.GET)
+    public ResponseModel getEntityById(@PathVariable("id") Long id) {
         try {
             return ResponseModel.ok(getService().findById(id));
-        } catch (Exception e) {
+        } catch (LibraryApiException e) {
             return ResponseModel.internalError(e);
         }
     }
 
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
-    public ResponseModel insertEntity(@Valid @RequestBody EntityType entity, BindingResult errors) {
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseModel insertEntity(@Valid @RequestBody E entity, BindingResult errors) {
         if (errors.hasErrors()) {
-            return ResponseModel.validationError(getErrorsMap(errors));
+            return ResponseModel.validationError(errors);
         }
         try {
-            getService().save(entity);
-            return ResponseModel.ok(entity);
-        } catch (Exception e) {
+            ServiceResult<E> result = getService().save(entity);
+            return chooseResponseModel(result);
+        } catch (LibraryApiException e) {
             return ResponseModel.internalError(e);
         }
     }
 
-    private Map<String, List<String>> getErrorsMap(BindingResult errors) {
-        Map<String, List<String>> result = new HashMap<>();
-        for (ObjectError error : errors.getAllErrors()) {
-            String name = error.getObjectName();
-            String errorCode = error.getDefaultMessage();
-            if (result.containsKey(name)) {
-                result.get(name).add(errorCode);
-            } else {
-                List<String> errorList = new ArrayList<>();
-                errorList.add(errorCode);
-                result.put(name, errorList);
-            }
+    @RequestMapping(params = "/{id}", method = RequestMethod.PUT)
+    public ResponseModel updateEntity(@PathVariable("id") Long id, @Valid @RequestBody E entity, BindingResult errors) {
+        if (errors.hasErrors()) {
+            return ResponseModel.validationError(errors);
         }
-        return result;
+        try {
+            ServiceResult<E> result = getService().update(id, entity);
+            return chooseResponseModel(result);
+        } catch (LibraryApiException e) {
+            return ResponseModel.internalError(e);
+        }
+    }
+
+    @RequestMapping(params = "/{id}", method = RequestMethod.DELETE)
+    public ResponseModel deleteEntity(@PathVariable("id") Long id) {
+        try {
+            ServiceResult<BaseEntityDto> result = getService().delete(id);
+            return chooseResponseModel(result);
+        } catch (LibraryApiException e) {
+            return ResponseModel.internalError(e);
+        }
+    }
+
+    private <T> ResponseModel chooseResponseModel(ServiceResult<T> result) {
+        switch (result.getResultType()) {
+            case UPDATED:
+                return ResponseModel.ok(result);
+            case CREATED:
+                return ResponseModel.ok(result);
+            case DELETED:
+                return ResponseModel.ok(result);
+            case NOT_EXIST:
+                return ResponseModel.badRequest(result);
+            default:
+                throw new UnsupportedServiceResultTypeException();
+        }
     }
 
 }

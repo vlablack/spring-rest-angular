@@ -1,9 +1,17 @@
 package org.library.rest.api.common.service;
 
-public interface GenericCRUDService<EntityType> {
+import org.library.rest.api.common.model.BaseEntityDto;
+import org.library.rest.api.common.model.ServiceResult;
+import org.library.rest.api.domain.HasId;
 
-    void save(EntityType entity);
+public interface GenericCRUDService<E extends HasId> {
 
-    EntityType findById(Long id);
+    ServiceResult<E> save(E entity);
+
+    ServiceResult<E> update(Long id, E entity);
+
+    ServiceResult<BaseEntityDto> delete(Long id);
+
+    E findById(Long id);
 
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "Authors")
-public class Author implements Serializable {
+public class Author implements Serializable, HasId {
 
     private static final long serialVersionUID = -416053639940575453L;
 
@@ -36,10 +36,12 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

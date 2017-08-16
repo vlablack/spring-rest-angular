@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Books")
-public class Book implements Serializable {
+public class Book implements Serializable, HasId {
 
     private static final long serialVersionUID = -7953032111886173643L;
 
@@ -31,10 +31,12 @@ public class Book implements Serializable {
             inverseJoinColumns = { @JoinColumn(name = "author_id", nullable = false, updatable = false) })
     private List<Author> authors;
 
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
