@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @ResponseBody
-public abstract class GenericCRUDController<E extends HasId> extends GenericReadController<E> {
+public abstract class GenericCRUDController<E extends HasId, F> extends GenericReadController<E, F> {
+
+    @Override
+    protected abstract GenericCRUDService<E, F> getService();
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel insertEntity(@Valid @RequestBody E entity, BindingResult errors) {

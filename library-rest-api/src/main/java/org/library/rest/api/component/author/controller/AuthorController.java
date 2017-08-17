@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(AuthorController.BASE_URL)
-public class AuthorController extends GenericCRUDController<Author> {
+public class AuthorController extends GenericCRUDController<Author, FilterableAuthor> {
 
     static final String BASE_URL = "/authors";
 
@@ -18,7 +18,7 @@ public class AuthorController extends GenericCRUDController<Author> {
     private AuthorService authorService;
 
     @Override
-    protected GenericCRUDService<Author> getService() {
+    protected GenericCRUDService<Author, FilterableAuthor> getService() {
         return authorService;
     }
 

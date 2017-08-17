@@ -4,7 +4,7 @@ import org.library.rest.api.common.model.BaseEntityDto;
 import org.library.rest.api.common.model.ServiceResult;
 import org.library.rest.api.domain.HasId;
 
-public interface GenericCRUDService<E extends HasId> extends GenericReadService<E> {
+public interface GenericCRUDService<E extends HasId, F> extends GenericReadService<E, F> {
 
     ServiceResult<E> save(E entity);
 

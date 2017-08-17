@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(BookController.BASE_URL)
-public class BookController extends GenericCRUDController<Book> {
+public class BookController extends GenericCRUDController<Book, FilterableBook> {
 
     static final String BASE_URL = "/books";
 
@@ -19,7 +19,7 @@ public class BookController extends GenericCRUDController<Book> {
     private BookService bookService;
 
     @Override
-    protected GenericCRUDService<Book> getService() {
+    protected GenericCRUDService<Book, FilterableBook> getService() {
         return bookService;
     }
 

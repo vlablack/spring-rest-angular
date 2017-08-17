@@ -7,7 +7,7 @@ import org.library.rest.api.domain.HasId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class GenericCRUDServiceImpl<E extends HasId> extends GenericReadServiceImpl<E> implements GenericCRUDService<E> {
+public abstract class GenericCRUDServiceImpl<E extends HasId, F> extends GenericReadServiceImpl<E, F> implements GenericCRUDService<E, F> {
 
     @Transactional(rollbackFor = LibraryApiException.class)
     @Override
