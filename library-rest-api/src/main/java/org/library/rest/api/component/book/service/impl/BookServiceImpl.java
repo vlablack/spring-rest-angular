@@ -5,7 +5,7 @@ import org.library.rest.api.component.book.controller.FilterableBook;
 import org.library.rest.api.component.book.repository.BookSpecification;
 import org.library.rest.api.component.book.service.BookService;
 import org.library.rest.api.domain.Book;
-import org.library.rest.api.repository.BookRepository;
+import org.library.rest.api.component.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
