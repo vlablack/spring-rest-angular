@@ -29,8 +29,8 @@ public abstract class BaseGenericSpecification<T, F> implements Specification<T>
     public final Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         this.root = root;
         this.criteriaBuilder = criteriaBuilder;
-        buildSpecification(root, query, criteriaBuilder, filterable);
         predicates = new ArrayList<>();
+        buildSpecification(root, query, criteriaBuilder, filterable);
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
 

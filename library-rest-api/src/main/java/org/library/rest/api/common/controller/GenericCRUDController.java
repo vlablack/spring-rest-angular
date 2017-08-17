@@ -34,7 +34,7 @@ public abstract class GenericCRUDController<E extends HasId, F> extends GenericR
         }
     }
 
-    @RequestMapping(params = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseModel updateEntity(@PathVariable("id") Long id, @Valid @RequestBody E entity, BindingResult errors) {
         if (errors.hasErrors()) {
             return ResponseModel.validationError(errors);
@@ -47,7 +47,7 @@ public abstract class GenericCRUDController<E extends HasId, F> extends GenericR
         }
     }
 
-    @RequestMapping(params = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseModel deleteEntity(@PathVariable("id") Long id) {
         try {
             ServiceResult<BaseEntityDto> result = getService().delete(id);

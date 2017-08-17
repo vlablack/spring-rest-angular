@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "Authors")
@@ -19,7 +20,7 @@ public class Author implements Serializable, HasId {
     @GeneratedValue
     private Long id;
 
-    @NotNull
+    @NotBlank
     @Length(max = 50)
     private String firstName;
 

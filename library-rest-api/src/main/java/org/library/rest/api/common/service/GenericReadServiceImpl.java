@@ -52,7 +52,7 @@ public abstract class GenericReadServiceImpl<E extends HasId, F> implements Gene
     }
 
     protected String[] getSort() {
-        return new String[] { "tik" };
+        return new String[] { "id" };
     }
 
     @SuppressWarnings("unchecked")
